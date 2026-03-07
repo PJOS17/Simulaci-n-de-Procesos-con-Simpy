@@ -10,8 +10,16 @@
 import simpy
 import random
 import statistics
-import matplotlib.pyplot as plt
+import matplotlib
 import os
+
+# Configurar backend grafico compatible con cualquier sistema operativo
+try:
+    matplotlib.use('TkAgg')
+except Exception:
+    pass  # Usa el backend por defecto si TkAgg no esta disponible
+
+import matplotlib.pyplot as plt
 
 # ---------------------------------------------------------------------------
 # Semilla para reproducibilidad
@@ -165,8 +173,9 @@ def generar_grafica(resultados, titulo, nombre_archivo, carpeta):
 
     ruta = os.path.join(carpeta, nombre_archivo)
     plt.savefig(ruta, dpi=150)
-    plt.close()
-    print(f"   Gráfica guardada: {nombre_archivo}")
+    print(f"   Grafica guardada: {nombre_archivo}")
+    plt.show(block=False)
+    plt.pause(0.5)
 
 
 # ---------------------------------------------------------------------------
@@ -203,8 +212,9 @@ def generar_grafica_comparativa(todos_resultados, intervalo, carpeta):
     nombre = f"comparacion_intervalo_{intervalo}.png"
     ruta = os.path.join(carpeta, nombre)
     plt.savefig(ruta, dpi=150)
-    plt.close()
-    print(f"   Gráfica comparativa guardada: {nombre}")
+    print(f"   Grafica comparativa guardada: {nombre}")
+    plt.show(block=False)
+    plt.pause(0.5)
 
 
 # ===========================================================================
@@ -302,3 +312,7 @@ if __name__ == "__main__":
     print("  La estrategia ganadora ofrece la mayor reduccion en el cuello de")
     print("  botella principal del sistema.")
     print(f"\n{'=' * 70}")
+
+    # Mantener todas las ventanas de graficas abiertas
+    print("\n  Cierre las ventanas de graficas para finalizar el programa.")
+    plt.show()
